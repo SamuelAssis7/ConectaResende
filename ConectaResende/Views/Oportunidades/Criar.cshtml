@@ -1,0 +1,77 @@
+﻿@model ConectaResende.Models.Publicacao
+
+@{
+    ViewData["Title"] = "Criar Publicação";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-lg">
+
+                <div class="card-header text-center bg-dark text-white">
+                    <h4>Criar nova oportunidade</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-controller="Publicacoes" asp-action="Criar" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label>Título</label>
+                            <input asp-for="Titulo" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Descrição</label>
+                            <textarea asp-for="Descricao" class="form-control"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Bairro</label>
+                            <input asp-for="Bairro" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Tipo</label>
+                            <select asp-for="Tipo" class="form-control">
+                                <option>Emprego</option>
+                                <option>Curso</option>
+                                <option>Ação Social</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+                            Publicar
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <script>
+        Swal.fire({
+            title: 'Sucesso!',
+            text: '@TempData["MensagemSucesso"]',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+}

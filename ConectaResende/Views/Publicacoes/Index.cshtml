@@ -1,0 +1,249 @@
+﻿@model IEnumerable<ConectaResende.Models.Publicacao>
+
+<style>
+    :root {
+        --bg-dark: #020617;
+        --card-bg: #e2e8f0; /* Cinza claro idêntico ao print */
+        --accent-blue: #3b82f6;
+        --text-dark: #0f172a;
+        --text-muted: #64748b;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        background-image: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: -2px;
+        background: linear-gradient(to bottom, #fff 40%, #64748b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .badge-hero {
+        background: linear-gradient(90deg, rgba(59,130,246,0.2) 0%, transparent 100%);
+        color: #60a5fa;
+        border-left: 3px solid var(--accent-blue);
+        padding: 6px 16px;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+
+    /* CARD NO PADRÃO DOS PRINTS (BRANCO ARREDONDADO) */
+    .pub-card {
+        background-color: var(--card-bg);
+        border-radius: 28px; /* Arredondamento suave do print */
+        padding: 28px;
+        height: 100%;
+        border: none;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+        .pub-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+    /* BADGES DE CATEGORIA IGUAL AO PRINT */
+    .badge-category {
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        color: white;
+        width: fit-content;
+    }
+
+    .bg-emprego {
+        background-color: #2563eb;
+    }
+    /* Azul */
+    .bg-curso {
+        background-color: #059669;
+    }
+    /* Verde */
+    .bg-social {
+        background-color: #f59e0b;
+    }
+    /* Amarelo */
+
+    .pub-title {
+        color: var(--text-dark);
+        font-weight: 800;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    .pub-text {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        flex-grow: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    .card-footer-custom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    .location-tag {
+        color: #ef4444; /* Pin vermelho */
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .location-name {
+        color: var(--text-muted);
+        text-transform: lowercase;
+        font-weight: 500;
+    }
+
+    /* BOTÃO DETALHES DO PRINT */
+    .btn-details-print {
+        background-color: #cbd5e1;
+        color: var(--text-dark);
+        border: 1px solid #94a3b8;
+        border-radius: 14px;
+        padding: 8px 22px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+        .btn-details-print:hover {
+            background-color: #94a3b8;
+            color: white;
+        }
+
+    /* MODAL REFINADO */
+    .modal-content {
+        background: #f8fafc;
+        color: #1e293b;
+        border-radius: 28px;
+        border: none;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 30px;
+    }
+
+    .modal-footer {
+        border-top: 1px solid rgba(0,0,0,0.05);
+        padding: 20px 30px;
+        background: #f1f5f9;
+    }
+
+    .modal-body {
+        padding: 30px;
+    }
+
+    .modal-content p {
+        color: #475569;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .modal-content h4 {
+        color: #0f172a;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .modal-info-box {
+        background: rgba(0,0,0,0.03);
+        padding: 15px;
+        border-radius: 15px;
+        margin-top: 20px;
+    }
+    
+</style>
+
+<div class="container py-5 mt-3">
+
+    <div class="mb-5 text-center text-md-start">
+        <span class="badge-hero mb-3">Feed Central // Oportunidades</span>
+        <div class="d-flex align-items-center gap-3">
+            <span style="font-size: 2rem;">🔥</span>
+            <h2 class="section-title m-0">Recentes</h2>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <p class="text-muted">Nenhuma publicação encontrada no terminal.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="pub-card">
+
+                        @{
+                            var badgeClass = item.Tipo == "Emprego" ? "bg-emprego" : (item.Tipo == "Curso" ? "bg-curso" : "bg-social");
+                            var emoji = item.Tipo == "Emprego" ? "💼" : (item.Tipo == "Curso" ? "🎓" : "🤝");
+                        }
+
+                        <div class="badge-category @badgeClass">
+                            <span>@emoji</span> @item.Tipo
+                        </div>
+
+                        <h4 class="pub-title">@item.Titulo</h4>
+                        <p class="pub-text">@item.Descricao</p>
+
+                        <div class="card-footer-custom">
+                            <div class="location-tag">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="location-name">@item.Bairro</span>
+                            </div>
+
+                            <button class="btn-details-print"
+                                    onclick="abrirDetalhes('@item.Titulo',
+                                    '@item.Descricao',
+                                    '@item.Bairro',
+                                    '@item.DataPublicacao.ToString("dd/MM/yyyy")',
+                                    '@item.Tipo',
+                                    '@item.EmailUsuario')">
+                                Detalhes
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

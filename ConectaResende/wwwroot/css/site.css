@@ -1,0 +1,81 @@
+body {
+    background: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(135deg, #212529, #343a40);
+}
+
+    /* cor dos textos */
+    .navbar .nav-link,
+    .navbar .navbar-brand {
+        color: #ffffff !important;
+        font-weight: 500;
+    }
+
+        .navbar .nav-link:hover {
+            color: #0dcaf0 !important;
+        }
+
+.page-content {
+    padding-top: 80px;
+}
+
+.hero{
+    padding:120px 0;
+    background:linear-gradient(135deg, #212529, #343a40);
+    color:white;
+}
+
+    .hero h1{
+    font-size: 56px;
+    font-weight: 700;
+}
+
+.hero p{
+    font-size: 20px;
+    opacity: 0.9;
+}
+
+.btn-main {
+    background: #fbbf24;
+    border: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.cards-section {
+    margin-top: 60px;
+}
+
+.card-feature {
+    border: none;
+    border-radius: 12px;
+    padding: 25px;
+    transition: 0.3s;
+}
+
+    .card-feature:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+/* FOOTER */
+footer {
+    background: linear-gradient(135deg, #212529, #343a40);
+    color: white;
+    padding: 20px 0;
+}
+
+    footer a {
+        color: #0dcaf0;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+

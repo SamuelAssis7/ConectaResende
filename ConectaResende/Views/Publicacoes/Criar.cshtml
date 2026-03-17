@@ -1,0 +1,240 @@
+﻿@model ConectaResende.Models.Publicacao
+
+@{
+    ViewData["Title"] = "Criar Publicação";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-dark: #020617;
+        --accent-blue: #3b82f6;
+        --electric-blue: #60a5fa;
+        --glass-bg: rgba(15, 23, 42, 0.8);
+        --border-glow: rgba(59, 130, 246, 0.2);
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        background-image: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.05) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Badge Hero Agressiva */
+    .badge-hero {
+        background: linear-gradient(90deg, rgba(59,130,246,0.2) 0%, transparent 100%);
+        color: var(--electric-blue);
+        border-left: 3px solid var(--accent-blue);
+        padding: 6px 16px;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+
+    /* Card com o corte diagonal idêntico ao Editar */
+    .create-card-glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-glow);
+        border-radius: 0px 40px 0px 40px;
+        padding: 50px;
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .create-card-glass::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+        }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: -2px;
+        background: linear-gradient(to bottom, #fff 40%, #64748b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Inputs High-Tech */
+    .form-label-premium {
+        color: var(--electric-blue);
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-premium, .form-select-premium {
+        background: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+        border-radius: 8px;
+        padding: 14px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+        .form-control-premium:focus, .form-select-premium:focus {
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3) !important;
+            outline: none;
+            transform: scale(1.01);
+        }
+
+    /* Botão Trapezoidal Agressivo */
+    .btn-publish-premium {
+        background: var(--accent-blue);
+        color: white;
+        border: none;
+        padding: 18px 40px;
+        border-radius: 4px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        transition: all 0.3s;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        .btn-publish-premium:hover {
+            background: #2563eb;
+            box-shadow: -10px 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+    .btn-back-premium {
+        color: #64748b;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+
+        .btn-back-premium:hover {
+            color: white;
+        }
+
+    .form-section-divider {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+        .form-section-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-glow);
+            margin-left: 15px;
+        }
+
+    .alert-premium {
+        background: rgba(59, 130, 246, 0.05);
+        border: 1px solid var(--border-glow);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 30px;
+        color: #94a3b8;
+        font-size: 0.85rem;
+    }
+</style>
+
+<div class="container py-5 mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="mb-5 text-center text-md-start">
+                <a asp-controller="Home" asp-action="Index" class="btn-back-premium mb-4 d-inline-block">
+                    [ <i class="fa-solid fa-chevron-left me-2"></i> Voltar ao início ]
+                </a>
+                <br />
+                <span class="badge-hero mb-3">System Request // Nova Publicação</span>
+                <h2 class="section-title text-uppercase">Divulgar Oportunidade</h2>
+            </div>
+
+            <div class="create-card-glass">
+                <form asp-controller="Publicacoes" asp-action="Criar" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All" class="text-danger mb-4"></div>
+
+                    <div class="form-section-divider">Dados da Oferta</div>
+
+                    <div class="mb-4">
+                        <label class="form-label-premium">Título da Publicação</label>
+                        <input asp-for="Titulo" class="form-control-premium w-100" placeholder="DIGITE O TÍTULO..." required />
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <label class="form-label-premium">Categoria</label>
+                            <select asp-for="Tipo" class="form-select-premium w-100">
+                                <option value="Emprego">Vaga de Emprego</option>
+                                <option value="Curso">Curso / Treinamento</option>
+                                <option value="Ação Social">Ação Social</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-premium">Localização (Bairro)</label>
+                            <input asp-for="Bairro" class="form-control-premium w-100" placeholder="LOCALIDADE" required />
+                        </div>
+                    </div>
+
+                    <div class="form-section-divider">Detalhes e Descrição</div>
+
+                    <div class="mb-4">
+                        <label class="form-label-premium">Conteúdo Completo</label>
+                        <textarea asp-for="Descricao" class="form-control-premium w-100" rows="6"
+                                  placeholder="DESCREVA OS DETALHES..."></textarea>
+                    </div>
+
+                    <div class="alert-premium d-flex align-items-center">
+                        <i class="fa-solid fa-shield-halved me-3 text-primary"></i>
+                        <div>
+                            Sua publicação passará por revisão e ficará visível em breve no terminal Conecta Resende.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-publish-premium">
+                        <i class="fa-solid fa-rocket me-2"></i> Publicar Oportunidade _
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <script>
+        Swal.fire({
+            title: 'Sucesso!',
+            text: '@Html.Raw(TempData["MensagemSucesso"])',
+            icon: 'success',
+            confirmButtonColor: '#f59e0b'
+        });
+    </script>
+}

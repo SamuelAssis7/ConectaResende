@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<style>
+    /* Cartão Principal com efeito de profundidade */
+    .glass-profile-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        backdrop-filter: blur(12px);
+        overflow: hidden;
+    }
+
+    /* Faixa de cor lateral para design moderno */
+    .accent-line {
+        height: 4px;
+        background: linear-gradient(90deg, #198754, #0d6efd);
+        width: 100%;
+    }
+
+    /* Avatar Minimalista */
+    .profile-avatar-wrapper {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, rgba(25, 135, 84, 0.2), rgba(13, 110, 253, 0.2));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Botões de Ação Dinâmicos */
+    .nav-action-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 18px;
+        padding: 20px;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        text-decoration: none !important;
+        display: block;
+    }
+
+        .nav-action-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(25, 135, 84, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-action-card i {
+            transition: transform 0.3s ease;
+        }
+
+        .nav-action-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+    .label-caps {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #198754;
+        margin-bottom: 5px;
+    }
+
+    .value-text {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="container py-5 mt-3">
+    <div class="row justify-content-center">
+        <div class="col-xl-9">
+
+            <div class="glass-profile-card shadow-lg anim-up">
+                <div class="accent-line"></div>
+
+                <div class="p-4 p-md-5">
+                    <div class="row align-items-center mb-5">
+                        <div class="col-md-auto text-center text-md-start mb-3 mb-md-0">
+                            <div class="profile-avatar-wrapper mx-auto">
+                                <i class="fa-solid fa-id-badge fa-3x text-white"></i>
+                            </div>
+                        </div>
+                        <div class="col-md ps-md-4 text-center text-md-start">
+                            <h2 class="fw-black text-white mb-1" style="font-size: 2.2rem;">Meu Perfil</h2>
+                            <p class="text-secondary mb-0 fs-5">Gerencie sua conta no ConectaResende</p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <div class="bg-dark bg-opacity-25 p-4 rounded-4 border border-white border-opacity-5 h-100">
+                                <h6 class="text-white fw-bold mb-4 opacity-75">Informações Básicas</h6>
+
+                                <div class="mb-4">
+                                    <div class="label-caps">Nome Cadastrado</div>
+                                    <div class="value-text">@ViewBag.Nome</div>
+                                </div>
+
+                                <div class="mb-0">
+                                    <div class="label-caps">Identificador de Acesso</div>
+                                    <div class="value-text" style="font-size: 0.95rem; color: #adb5bd;">@ViewBag.Email</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <a asp-controller="Publicacoes" asp-action="Minhas" class="nav-action-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="p-3 bg-primary bg-opacity-10 rounded-4 me-3">
+                                                <i class="fa-solid fa-briefcase text-primary fa-xl"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h5 class="text-white fw-bold mb-1">Minhas Publicações</h5>
+                                                <p class="text-secondary small mb-0">Visualize e edite suas vagas e cursos ativos.</p>
+                                            </div>
+                                            <i class="fa-solid fa-arrow-right text-secondary opacity-25"></i>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-12">
+                                    <a asp-controller="Publicacoes" asp-action="Criar" class="nav-action-card">
+                                        <div class="d-flex align-items-center">
+                                            <div class="p-3 bg-success bg-opacity-10 rounded-4 me-3">
+                                                <i class="fa-solid fa-plus-square text-success fa-xl"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h5 class="text-white fw-bold mb-1">Nova Publicação</h5>
+                                                <p class="text-secondary small mb-0">Anuncie novas oportunidades agora mesmo.</p>
+                                            </div>
+                                            <i class="fa-solid fa-arrow-right text-secondary opacity-25"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

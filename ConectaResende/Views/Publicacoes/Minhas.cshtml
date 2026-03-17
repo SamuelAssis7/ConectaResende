@@ -1,0 +1,212 @@
+﻿@model List<ConectaResende.Models.Publicacao>
+
+<style>
+    :root {
+        --bg-dark: #030712;
+        --card-light: #e9eff5; /* Cor clara da sua Home */
+        --text-dark: #1e293b;
+        --accent-blue: #3b82f6;
+        --accent-red: #ef4444;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        background-image: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+        color: white;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .dashboard-header {
+        padding: 60px 0 40px;
+    }
+
+    .page-title {
+        font-weight: 800;
+        letter-spacing: -1px;
+        font-size: 2.2rem;
+    }
+
+    /* CARD ATUALIZADO: COR CLARA E TAMANHO DA HOME */
+    .my-card {
+        background: var(--card-light);
+        border: none;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+        .my-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+    .card-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        color: var(--text-dark); /* Texto escuro para o card claro */
+    }
+
+    .card-text {
+        color: #64748b; /* Legibilidade alta no fundo claro */
+        font-size: 0.95rem;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Ajustado para manter o card compacto como na imagem */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* BADGES */
+    .type-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 8px;
+        background: #2563eb; /* Azul sólido como na imagem */
+        color: white;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+
+    /* BOTÕES */
+    .btn-action {
+        border-radius: 12px;
+        padding: 10px 15px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: 0.3s;
+        border: 1px solid #d1d5db;
+        flex: 1;
+    }
+
+    .btn-edit {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+        .btn-edit:hover {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+    .btn-delete {
+        background: #fee2e2;
+        color: var(--accent-red);
+        border-color: #fecaca;
+    }
+
+        .btn-delete:hover {
+            background: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+        }
+
+    .empty-state {
+        background: rgba(17, 24, 39, 0.7);
+        border: 1px dashed rgba(255, 255, 255, 0.08);
+        border-radius: 32px;
+        padding: 60px;
+        text-align: center;
+    }
+</style>
+
+<div class="container mb-5">
+    <div class="dashboard-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="page-title mb-1">Minhas Publicações</h2>
+            <p style="color: rgba(255,255,255,0.5)">Gerencie as oportunidades que você compartilhou.</p>
+        </div>
+        <a asp-action="Criar" class="btn btn-primary px-4 py-2 rounded-pill fw-bold">
+            <i class="fa-solid fa-plus me-2"></i> Nova
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="mb-4">
+                <i class="fa-regular fa-folder-open fa-4x text-muted opacity-25"></i>
+            </div>
+            <h4 class="fw-bold">Nenhuma publicação encontrada</h4>
+            <p class="text-muted">Você ainda não criou nenhuma oportunidade em nossa plataforma.</p>
+            <a asp-action="Criar" class="btn btn-outline-primary mt-3 rounded-pill px-5">Criar agora</a>
+        </div>
+    }
+    else
+    {
+        /* row-cols-lg-3 garante 3 cards por linha como na imagem de Recentes */
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 d-flex align-items-stretch">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="my-card h-100">
+                        <div class="card-body">
+                            <span class="type-badge">
+                                @if (item.Tipo == "Emprego")
+                                {
+                                    <i class="fa-solid fa-briefcase me-1"></i>
+                                }
+                                else if (item.Tipo == "Curso")
+                                {
+
+                                    <i class="fa-solid fa-graduation-cap me-1"></i>
+                                }
+                                @item.Tipo
+                            </span>
+
+                            <h5 class="card-title">@item.Titulo</h5>
+
+                            <p class="card-text">@item.Descricao</p>
+
+                            <div class="mt-4 pt-3 border-top border-dark border-opacity-10 d-flex justify-content-between align-items-center">
+                                <small style="color: #64748b">
+                                    <i class="fa-regular fa-calendar me-1"></i> @item.DataPublicacao.ToString("dd/MM/yyyy")
+                                </small>
+                                <small style="color: #ef4444; font-weight: 600;">
+                                    <i class="fa-solid fa-location-dot me-1"></i> @item.Bairro
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="p-3 pt-0 d-flex gap-2">
+                            <a asp-action="Editar" asp-route-id="@item.Id" class="btn-action btn-edit text-decoration-none text-center">
+                                <i class="fa-solid fa-pen-to-square me-1"></i> Editar
+                            </a>
+
+                            <a asp-action="Excluir" asp-route-id="@item.Id" class="btn-action btn-delete text-decoration-none text-center">
+                                <i class="fa-solid fa-trash-can me-1"></i> Excluir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: '@Html.Raw(TempData["MensagemSucesso"])',
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+        });
+    </script>
+}

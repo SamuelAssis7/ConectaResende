@@ -1,0 +1,362 @@
+﻿@model List<ConectaResende.Models.Publicacao>
+
+<style>
+    :root {
+        --bg-dark: #030712;
+        --glass: rgba(255,255,255,0.02);
+        --glass-border: rgba(255,255,255,0.08);
+        --accent-blue: #3b82f6;
+        --accent-yellow: #f59e0b;
+        --card-light: #f8fafc;
+        --card-medium: #e2e8f0;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        color: #f3f4f6;
+        font-family: 'Inter',sans-serif;
+    }
+
+    /* HERO */
+    .hero {
+        background: radial-gradient(circle at center,rgba(59,130,246,0.12) 0%,var(--bg-dark) 75%);
+        padding: 120px 0 100px;
+    }
+
+    .badge-hero {
+        background: rgba(59,130,246,0.1);
+        color: var(--accent-blue);
+        border: 1px solid rgba(59,130,246,0.2);
+        padding: 8px 16px;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    /* CATEGORIAS */
+    .card-category {
+        background: var(--card-light);
+        border: none;
+        border-radius: 20px;
+        padding: 35px 25px;
+        transition: all 0.35s ease;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+        height: 230px; /* controla a altura */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .card-category:hover {
+            transform: translateY(-8px);
+            background: #ffffff;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.5);
+        }
+
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 18px;
+    }
+
+    .bg-jobs {
+        background: rgba(59,130,246,.1);
+        color: #3b82f6;
+    }
+
+    .bg-courses {
+        background: rgba(16,185,129,.1);
+        color: #10b981;
+    }
+
+    .bg-social {
+        background: rgba(245,158,11,.1);
+        color: #f59e0b;
+    }
+
+    .card-category:hover .icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .card-category h5 {
+        color: #0f172a !important;
+        font-weight: 800;
+    }
+
+    .card-category p {
+        color: #64748b !important;
+    }
+
+    /* OPORTUNIDADES */
+    .card-opportunity {
+        background: var(--card-medium);
+        border: none;
+        border-radius: 20px;
+        transition: .3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+        .card-opportunity:hover {
+            background: var(--card-light);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .card-opportunity h5 {
+            color: #0f172a !important;
+            font-weight: 700;
+        }
+
+    .text-muted-custom {
+        color: #475569 !important;
+    }
+
+    .badge-custom {
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    .btn-detail {
+        border: 1px solid #94a3b8;
+        color: #1e293b;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-detail:hover {
+            background: #0f172a;
+            color: #fff;
+            border-color: #0f172a;
+        }
+
+    /* MODAL REFINADO */
+    .modal-content {
+        background: #f8fafc;
+        color: #1e293b;
+        border-radius: 28px;
+        border: none;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 30px;
+    }
+
+    .modal-footer {
+        border-top: 1px solid rgba(0,0,0,0.05);
+        padding: 20px 30px;
+        background: #f1f5f9;
+    }
+
+    .modal-body {
+        padding: 30px;
+    }
+
+    .modal-content p {
+        color: #475569;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .modal-content h4 {
+        color: #0f172a;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .modal-info-box {
+        background: rgba(0,0,0,0.03);
+        padding: 15px;
+        border-radius: 15px;
+        margin-top: 20px;
+    }
+</style>
+
+<section class="hero text-center text-white">
+    <div class="container">
+        <span class="badge-hero mb-3 text-uppercase fw-bold">Oportunidades em Resende</span>
+        <h1 class="display-3 fw-bold mb-3">Conecta <span style="color:var(--accent-yellow)">Resende</span></h1>
+        <p class="mb-5 mx-auto opacity-75" style="max-width:700px;font-size:1.2rem;">
+            A ponte entre talentos locais e oportunidades de emprego, cursos e ações sociais.
+        </p>
+        <a asp-controller="Publicacoes" asp-action="Criar" class="btn btn-warning px-5 py-3 shadow fw-bold rounded-pill">
+            <i class="fa-solid fa-plus me-2"></i> Criar Publicação
+        </a>
+    </div>
+</section>
+
+<section class="py-5" style="margin-top:-80px">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-category text-center">
+                    <div class="icon-wrapper bg-jobs"><i class="fa-solid fa-briefcase fa-2x"></i></div>
+                    <h5>Vagas de Emprego</h5>
+                    <p>Encontre oportunidades nas empresas de Resende.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-category text-center">
+                    <div class="icon-wrapper bg-courses"><i class="fa-solid fa-graduation-cap fa-2x"></i></div>
+                    <h5>Cursos</h5>
+                    <p>Capacite-se com cursos e treinamentos.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-category text-center">
+                    <div class="icon-wrapper bg-social"><i class="fa-solid fa-handshake-angle fa-2x"></i></div>
+                    <h5>Ações Sociais</h5>
+                    <p>Participe de projetos sociais da cidade.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5" id="recentes">
+    <h2 class="fw-bold mb-4 text-white">🔥 Recentes</h2>
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-opportunity h-100">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-3">
+                                @if (item.Tipo == "Emprego")
+                                {
+                                    <span class="badge bg-primary badge-custom px-3 py-2">💼 Emprego</span>
+                                }
+                                else if (item.Tipo == "Curso")
+                                {
+
+                                    <span class="badge bg-success badge-custom px-3 py-2">🎓 Curso</span>
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-warning text-dark badge-custom px-3 py-2">🤝 Social</span>
+                                }
+                            </div>
+                            <h5>@item.Titulo</h5>                          
+                            <p class="text-muted-custom small mb-4">
+                                @(item.Descricao.Length > 100 ? item.Descricao.Substring(0, 100) + "..." : item.Descricao)
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="small text-muted-custom">
+                                    <i class="fa-solid fa-location-dot text-danger me-1"></i>@item.Bairro
+                                </div>
+                                <button class="btn btn-detail btn-sm rounded-pill px-4"
+                                        onclick="abrirDetalhes(
+                                        '@item.Titulo',
+                                        '@item.Descricao',
+                                        '@item.Bairro',
+                                        '@item.DataPublicacao.ToString("dd/MM/yyyy")',
+                                        '@item.Tipo',
+                                        '@item.EmailUsuario'
+                                        )">
+                                    Detalhes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<div class="modal fade" id="modalDetalhes" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header d-flex justify-content-between align-items-start">
+                <div>
+                    <span id="tipoModal" class="badge mb-2 px-3 py-2 rounded-pill"></span>
+                    <h4 id="tituloModal" class="mb-0"></h4>                   
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="descricaoModal" class="mb-4"></p>
+                <div class="modal-info-box">
+                    <div class="row text-center">
+                        <div class="col-md-6 border-end">
+                            <i class="fa-solid fa-location-dot text-danger mb-2"></i><br>
+                            <strong>Bairro</strong><br>
+                            <span id="bairroModal" class="text-muted"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <i class="fa-solid fa-calendar text-primary mb-2"></i><br>
+                            <strong>Publicado em</strong><br>
+                            <span id="dataModal" class="text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light fw-bold rounded-pill px-4" data-bs-dismiss="modal">Fechar</button>
+                <a id="linkInteresseModal"
+                   href="#"
+                   onclick="enviarEmail()"
+                   class="btn btn-primary fw-bold rounded-pill px-4 shadow-sm">
+                    Tenho Interesse
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (TempData["MensagemSucesso"] != null)
+{
+    <script>
+        Swal.fire({
+            title:'Sucesso!',
+            text:'@Html.Raw(TempData["MensagemSucesso"])',
+            icon:'success',
+            confirmButtonColor:'#3b82f6'
+        });
+    </script>
+}
+
+<script>
+    function abrirDetalhes(titulo,descricao,bairro,data,tipo,email){
+
+        document.getElementById("tituloModal").innerText=titulo;
+        document.getElementById("descricaoModal").innerText=descricao;
+        document.getElementById("bairroModal").innerText=bairro;
+        document.getElementById("dataModal").innerText=data;
+
+        var tipoBadge=document.getElementById("tipoModal");
+        tipoBadge.innerText=tipo;
+
+        if(tipo=="Emprego"){ tipoBadge.className="badge bg-primary mb-2 px-3 py-2 rounded-pill"; }
+        else if(tipo=="Curso"){ tipoBadge.className="badge bg-success mb-2 px-3 py-2 rounded-pill"; }
+        else{ tipoBadge.className="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill"; }
+
+       // Monta o link para Gmail com assunto e corpo
+        const assunto = encodeURIComponent("Tenho Interesse na Publicação: " + titulo);
+        const corpo = encodeURIComponent(
+            "Olá,\n\nTenho interesse na vaga/publicação abaixo:\n\n" +
+            "Título: " + titulo + "\n" +
+            "Descrição: " + descricao + "\n" +
+            "Bairro: " + bairro + "\n" +
+            "Data: " + data + "\n\n" +
+            "Aguardo seu retorno."
+        );
+
+        var link = document.getElementById("linkInteresseModal");
+        link.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${assunto}&body=${corpo}`;
+
+        var modal=new bootstrap.Modal(document.getElementById('modalDetalhes'));
+        modal.show();
+    }
+</script>
